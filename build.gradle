@@ -1,0 +1,82 @@
+plugins {
+    id 'java'
+    id "org.liquibase.gradle" version "2.2.0"
+}
+
+group = "come.carepulse.schema"
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    schemaspyRuntime
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    liquibaseRuntime 'info.picocli:picocli:4.7.5'
+    liquibaseRuntime 'org.liquibase:liquibase-core:4.24.0'
+    liquibaseRuntime 'org.postgresql:postgresql:42.6.0'
+    schemaspyRuntime 'org.schemaspy:schemaspy:6.2.4'
+    schemaspyRuntime group: 'org.postgresql', name: 'postgresql', version: '42.3.6'
+}
+apply plugin: "org.liquibase.gradle"
+
+def env = "develop"
+if (project.hasProperty("env")) {
+    env = project.env
+}
+
+liquibase {
+    def props = new Properties()
+    file("./environments/" + env + ".conf").withInputStream { props.load( it )}
+    def dbName = props.getProperty("DB_NAME")
+    def dbServer = props.getProperty("DB_SERVER")
+    def dbPort = props.getProperty("DB_PORT")
+    def dbUser = props.getProperty("DB_USER")
+    def dbPassword = props.getProperty("DB_PASSWORD")
+
+    activities {
+        main {
+            url 'jdbc:postgresql://' + dbServer + ':' + dbPort + '/' +dbName
+            username dbUser
+            password dbPassword
+        }
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+}
+
+task copySchemaSpyMeta(type: Copy) {
+    from file("schemaspy/schemaspy-meta.xml")
+    into file("$buildDir")
+}
+
+task schemaSpy(type: JavaExec) {
+    def outputDir = "build/schemaspy"
+    def metadataFile= "$buildDir/schemaspy-meta.xml"
+    def propertiesFile = "schemaspy/schemaspy.properties"
+
+    if(project.hasProperty("outputDirectory") && outputDirectory?.trim()) {
+        outputDir = outputDirectory?.trim()
+    }
+
+    classpath = configurations.schemaspyRuntime
+    mainClass = "org.springframework.boot.loader.JarLuncher"
+
+    outputs.dir file(outputDir)
+    inputs.file file(metadataFile)
+    inputs.file file(propertiesFile)
+    inputs.dir file("schema")
+
+    args "-o", file(outputDir), "-configFile", file(propertiesFile),
+            "-dp", configurations.schemaspyRuntime,
+            "-meta", file(metadataFile),
+            "-vizjs", "-imageformat", "svg", "-noimplied", "-norows"
+    dependsOn copySchemaSpyMeta
+}
