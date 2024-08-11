@@ -1,5 +1,8 @@
 # CareFusion-schema
 Liquibase repo for CareFusion app
+## Prerequisites
+1. Install docker
+2. Install pgAdmin 4 https://www.pgadmin.org/download/pgadmin-4-macos/
 ## Docker Operations
 ### Docker Pull Image
 This project uses postgresql 16.3. <br/>
