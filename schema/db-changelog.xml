@@ -161,4 +161,18 @@
 <!--        />-->
 
     </changeSet>
+  <changeSet id="CAR-29" author="Andy Chang">
+    <addColumn
+      tableName="users">
+      <column name="emailConfirmed"
+        type="boolean" defaultValueComputed="false">
+      <constraints nullable="false"/>
+      </column>
+    </addColumn>
+    <rollback>
+      <dropColumn tableName="users">
+        <column name="emailConfirmed"/>
+      </dropColumn>
+    </rollback>
+  </changeSet>
 </databaseChangeLog>
