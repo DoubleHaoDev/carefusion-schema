@@ -76,3 +76,4 @@ jobs:
           user: postgres
           password: carefusion
           all: true
+          output_dir: build/schemaspy
