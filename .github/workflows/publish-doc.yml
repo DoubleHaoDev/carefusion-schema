@@ -59,7 +59,7 @@ jobs:
 
 #      - name: Config Artifactory
       - name: Setup Liquibase and Update
-      - uses: liquibase-github-actions/update@v4.29.1
+        uses: liquibase-github-actions/update@v4.29.1
         with:
           changelogFile: "schema/db-changlog.xml"
           url: "jdbc:postgresql://localhost:5432/carefusion_development"
