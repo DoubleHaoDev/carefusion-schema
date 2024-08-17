@@ -83,7 +83,7 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
         with:
-          source-files: 'build/schemaspy'
+          source-files: 'build/schemaspy/'
           destination-username: 'DoubleHaoDev'
           destination-repository: 'carefusion-schemaSpy'
           destination-branch: 'main'
