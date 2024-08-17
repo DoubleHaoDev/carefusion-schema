@@ -60,6 +60,9 @@ jobs:
       - name: Set JAVA_HOME
         run: echo "JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))))" >> $GITHUB_ENV
 
+      - name: Verify JAVA_HOME
+        run: echo $JAVA_HOME
+
       - name: Setup Liquibase and Update
         uses: liquibase-github-actions/update@v4.29.1
         with:
