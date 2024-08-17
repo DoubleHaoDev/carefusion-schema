@@ -59,6 +59,7 @@ jobs:
           defaultSchemaName: "carefusion_development"
           password: "carefusion"
           username: "postgres"
+          driver: "org.postgresql.Driver"
 
       - name: Set up JDK 17
         uses: actions/setup-java@v3
