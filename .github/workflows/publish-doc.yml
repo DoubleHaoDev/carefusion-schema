@@ -64,5 +64,15 @@ jobs:
           distribution: 'zulu'
           java-version: 17
 
-      - name: Build SchemaSpy Files
-        run: ./gradlew schemaspy
+#      - name: Build SchemaSpy Files
+#        run: ./gradlew schemaspy
+      - name: Run SchemaSpy
+        uses: tj-actions/schemaspy@v2
+        with:
+          host: postgres
+          port: 5432
+          database_name: carefusion_development
+          database_type: pgsql
+          user: postgres
+          password: carefusion
+          all: true

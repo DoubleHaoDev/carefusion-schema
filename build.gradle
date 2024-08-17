@@ -41,7 +41,7 @@ task schemaspy(type: JavaExec) {
     }
 
     classpath = configurations.schemaspyRuntime
-    mainClass = "org.springframework.boot.loader.launch.JarLauncher"
+    mainClass = "org.schemaspy.Main"
     outputs.dir file(outputDir)
     inputs.file file(metadataFile)
     inputs.file file(propertiesFile)
@@ -49,7 +49,7 @@ task schemaspy(type: JavaExec) {
     args "-o", file(outputDir), "-configFile", file(propertiesFile),
             "-dp", configurations.schemaspyRuntime,
             "-meta", file(metadataFile),
-            "-vizjs", "-imageformat", "svg", "-noimplied", "-norrows"
+            "-vizjs", "-imageformat", "svg", "-noimplied", "-norows"
     dependsOn copySchemaSpyMeta
 }
 
