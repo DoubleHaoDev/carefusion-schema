@@ -54,7 +54,7 @@ jobs:
       - name: Setup Liquibase and Update
         uses: liquibase-github-actions/update@v4.29.1
         with:
-          changelogFile: "schema/db-changlog.xml"
+          changelogFile: "schema/db-changelog.xml"
           url: "jdbc:postgresql://postgres:5432/carefusion_development"
           defaultSchemaName: "carefusion_development"
           password: "carefusion"
