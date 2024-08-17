@@ -86,3 +86,4 @@ jobs:
           source-files: 'build/schemaspy'
           destination-username: 'DoubleHaoDev'
           destination-repository: 'carefusion-schemaSpy'
+          destination-branch: 'main'
