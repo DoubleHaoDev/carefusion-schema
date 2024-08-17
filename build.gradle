@@ -10,6 +10,9 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+    schemaspyRuntime
+}
 
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.9.1')
@@ -17,8 +20,38 @@ dependencies {
     liquibaseRuntime 'info.picocli:picocli:4.7.5'
     liquibaseRuntime 'org.liquibase:liquibase-core:4.24.0'
     liquibaseRuntime 'org.postgresql:postgresql:42.6.0'
+    schemaspyRuntime 'org.schemaspy:schemaspy:6.2.4'
+    schemaspyRuntime 'org.postgresql:postgresql:42.6.0'
 }
 apply plugin: "org.liquibase.gradle"
+
+task copySchemaSpyMeta(type: Copy) {
+    from file("schemaspy/schemaspy-meta.xml")
+    into file("$layout.buildDirectory")
+
+}
+
+task schemaspy(type: JavaExec) {
+    def outputDir = "build/schemaspy"
+    def metadataFile = "$layout.buildDirectory/schemaspy-meta.xml"
+    def propertiesFile = "schemaspy/schemaspy.properties"
+
+    if(project.hasProperty("outputDirectory") && outputDirectory?.trim()){
+        outputDir = outputDirectory?.trim()
+    }
+
+    classpath = configurations.schemaspyRuntime
+    mainClass = "org.springframework.boot.loader.launch.JarLauncher"
+    outputs.dir file(outputDir)
+    inputs.file file(metadataFile)
+    inputs.file file(propertiesFile)
+    inputs.dir file("schema")
+    args "-o", file(outputDir), "-configFile", file(propertiesFile),
+            "-dp", configurations.schemaspyRuntime,
+            "-meta", file(metadataFile),
+            "-vizjs", "-imageformat", "svg", "-noimplied", "-norrows"
+    dependsOn copySchemaSpyMeta
+}
 
 def env = "develop"
 if (project.hasProperty("env")) {
