@@ -194,4 +194,11 @@
       oldColumnName="emailConfirmed"
       tableName="users"/>
   </changeSet>
+
+  <changeSet id="*" author="Andy Chang">
+    <renameColumn
+      newColumnName="email_confirmed_test"
+      oldColumnName="email_confirmed"
+      tableName="users"/>
+  </changeSet>
 </databaseChangeLog>
