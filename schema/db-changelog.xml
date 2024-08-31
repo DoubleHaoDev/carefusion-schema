@@ -364,5 +364,39 @@
       validate="true"
     />
   </changeSet>
+  <changeSet id="CAR-63" author="Andy Chang">
+    <dropColumn
+      tableName="physicians"
+      columnName="first_name"
+    />
+    <rollback>
+      <addColumn tableName="physicians">
+        <column name="first_name" type="varchar(50)">
+          <constraints nullable="false"/>
+        </column>
+      </addColumn>
+    </rollback>
 
+    <dropColumn
+      tableName="physicians"
+      columnName="last_name"
+    />
+    <rollback>
+      <addColumn tableName="physicians">
+        <column name="last_name" type="varchar(50)">
+          <constraints nullable="false"/>
+        </column>
+      </addColumn>
+    </rollback>
+
+    <addColumn
+      tableName="users">
+      <column name="first_name"
+        type="varchar(50)"/>
+      <column name="last_name"
+        type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>
