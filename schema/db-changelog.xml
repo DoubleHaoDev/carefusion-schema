@@ -489,4 +489,17 @@
             validate="true"
     />
   </changeSet>
+  <changeSet id="CAR-44" author="Maxine Wu">
+    <createTable tableName="allergies">
+      <column name="id" autoIncrement="true" type="SERIAL">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="allergies_pkey"/>
+      </column>
+      <column name="uuid" type="UUID" defaultValueComputed="gen_random_uuid()">
+        <constraints nullable="false" unique="true"/>
+      </column>
+      <column name="name" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
 </databaseChangeLog>
