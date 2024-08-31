@@ -458,4 +458,35 @@
       </column>
     </addColumn>
   </changeSet>
+  <changeSet id="CAR-44" author="Maxine Wu">
+    <createTable tableName="patient_allergies">
+      <column name="id" autoIncrement="true" type="SERIAL">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="patient_allergies_pkey"/>
+      </column>
+      <column name="patient_id" type="int">
+        <constraints nullable="false"/>
+      </column>
+      <column name="allergy_id" type="int">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+    <addForeignKeyConstraint
+            baseTableName="patient_allergies"
+            baseColumnNames="patient_id"
+            referencedTableName="patients"
+            referencedColumnNames="id"
+            constraintName="patient_allergies_patient_id_fk"
+            onDelete="RESTRICT"
+            validate="true"
+    />
+    <addForeignKeyConstraint
+            baseTableName="patient_allergies"
+            baseColumnNames="patient_id"
+            referencedTableName="allergies"
+            referencedColumnNames="id"
+            constraintName="patient_allergies_allergy_id_fk"
+            onDelete="RESTRICT"
+            validate="true"
+    />
+  </changeSet>
 </databaseChangeLog>
