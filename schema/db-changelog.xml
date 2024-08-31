@@ -376,29 +376,23 @@
         </column>
       </addColumn>
     </rollback>
-
+  </changeSet>
   <changeSet id="CAR-44" author="Maxine Wu">
     <addColumn tableName="patients">
-      <column name="first_name" type="varchar(150)">
-        <constraints nullable="false"/>
-      </column>
-      <column name="last_name" type="varchar(150)">
-        <constraints nullable="false"/>
-      </column>
       <column name="primary_phone" type="varchar(150)">
         <constraints nullable="false"/>
       </column>
       <column name="birthdate" type="TIMESTAMP WITH TIME ZONE">
         <constraints nullable="false"/>
       </column>
-      <column name="gender" type="varchar(150)">
+      <column name="gender" type="varchar(10)">
         <constraints nullable="false"/>
       </column>
       <column name="address" type="varchar(150)">
         <constraints nullable="false"/>
       </column>
       <column name="occupation" type="varchar(150)">
-        <constraints nullable="false"/>
+        <constraints nullable="true"/>
       </column>
       <column name="emergency_contact_name" type="varchar(150)">
         <constraints nullable="false"/>
@@ -415,24 +409,33 @@
       <column name="identification_document_id" type="int">
         <constraints nullable="false"/>
       </column>
-      <column name="treatment_concent" type="boolean">
+      <column name="treatment_concent" type="boolean" defaultValueComputed="false">
         <constraints nullable="false"/>
       </column>
-      <column name="disclosure_concent" type="boolean">
+      <column name="disclosure_concent" type="boolean" defaultValueComputed="false">
         <constraints nullable="false"/>
       </column>
-      <column name="privacy_concent" type="boolean">
+      <column name="privacy_concent" type="boolean" defaultValueComputed="false">
         <constraints nullable="false"/>
       </column>
-      <column name="privacy_concent" type="boolean">
+      <column name="privacy_concent" type="boolean" defaultValueComputed="false">
         <constraints nullable="false"/>
       </column>
       <column name="user_id" type="int">
         <constraints nullable="false"/>
       </column>
     </addColumn>
+    <addForeignKeyConstraint
+      baseTableName="patients"
+      baseColumnNames="user_id"
+      constraintName="tokens_user_id_fk"
+      onDelete="RESTRICT"
+      referencedTableName="users"
+      referencedColumnNames="id"
+      validate="true"
+      />
   </changeSet>
-
+  <changeSet id="CAR-63" author="Andy Chang">
     <dropColumn
       tableName="physicians"
       columnName="last_name"
