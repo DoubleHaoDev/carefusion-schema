@@ -451,12 +451,20 @@
     <addColumn
       tableName="users">
       <column name="first_name"
-        type="varchar(50)"/>
+        type="varchar(50)">
+        <constraints nullable="false"/>
+      </column>
       <column name="last_name"
         type="varchar(50)">
         <constraints nullable="false"/>
       </column>
     </addColumn>
+    <rollback>
+      <dropColumn tableName="users">
+        <column name="first_name"/>
+        <column name="last_name"/>
+      </dropColumn>
+    </rollback>
   </changeSet>
   <changeSet id="CAR-44" author="Maxine Wu">
     <createTable tableName="patient_allergies">
