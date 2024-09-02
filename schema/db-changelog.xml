@@ -414,7 +414,7 @@
       referencedTableName="users"
       referencedColumnNames="id"
       validate="true"
-      />
+    />
     <createTable tableName="allergies">
       <column name="id" autoIncrement="true" type="SERIAL">
         <constraints nullable="false" primaryKey="true" primaryKeyName="allergies_pkey"/>
@@ -438,22 +438,22 @@
       </column>
     </createTable>
     <addForeignKeyConstraint
-            baseTableName="patient_allergies"
-            baseColumnNames="patient_id"
-            referencedTableName="patients"
-            referencedColumnNames="id"
-            constraintName="patient_allergies_patient_id_fk"
-            onDelete="RESTRICT"
-            validate="true"
+      baseTableName="patient_allergies"
+      baseColumnNames="patient_id"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      constraintName="patient_allergies_patient_id_fk"
+      onDelete="RESTRICT"
+      validate="true"
     />
     <addForeignKeyConstraint
-            baseTableName="patient_allergies"
-            baseColumnNames="allergy_id"
-            referencedTableName="allergies"
-            referencedColumnNames="id"
-            constraintName="patient_allergies_allergy_id_fk"
-            onDelete="RESTRICT"
-            validate="true"
+      baseTableName="patient_allergies"
+      baseColumnNames="allergy_id"
+      referencedTableName="allergies"
+      referencedColumnNames="id"
+      constraintName="patient_allergies_allergy_id_fk"
+      onDelete="RESTRICT"
+      validate="true"
     />
     <createTable tableName="medications">
       <column name="id" autoIncrement="true" type="SERIAL">
@@ -471,33 +471,34 @@
         <constraints nullable="false" primaryKeyName="patient_medications_pkey"/>
       </column>
       <column name="patient_id" type="int">
-        <constraints nullable="false" />
+        <constraints nullable="false"/>
       </column>
       <column name="medication_id" type="int">
         <constraints nullable="false"/>
       </column>
     </createTable>
     <addForeignKeyConstraint
-            baseTableName="patient_medications"
-            baseColumnNames="patient_id"
-            constraintName="patient_medications_patient_id_fk"
-            referencedTableName="patients"
-            referencedColumnNames="id"
-            onDelete="RESTRICT"
-            validate="true"
+      baseTableName="patient_medications"
+      baseColumnNames="patient_id"
+      constraintName="patient_medications_patient_id_fk"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      onDelete="RESTRICT"
+      validate="true"
     />
     <addForeignKeyConstraint
-            baseTableName="patient_medications"
-            baseColumnNames="medication_id"
-            constraintName="patient_medications_medication_id_fk"
-            referencedTableName="medications"
-            referencedColumnNames="id"
-            onDelete="RESTRICT"
-            validate="true"
+      baseTableName="patient_medications"
+      baseColumnNames="medication_id"
+      constraintName="patient_medications_medication_id_fk"
+      referencedTableName="medications"
+      referencedColumnNames="id"
+      onDelete="RESTRICT"
+      validate="true"
     />
     <createTable tableName="identification_documents">
       <column name="id" type="SERIAL">
-        <constraints nullable="false" primaryKeyName="identification_documents_pkey" primaryKey="true"/>
+        <constraints nullable="false" primaryKeyName="identification_documents_pkey"
+          primaryKey="true"/>
       </column>
       <column name="uuid" type="UUID" defaultValueComputed="gen_random_uuid()">
         <constraints nullable="false" unique="true"/>
@@ -510,26 +511,26 @@
       </column>
     </createTable>
     <addForeignKeyConstraint
-            baseTableName="identification_documents"
-            baseColumnNames="id"
-            constraintName="identification_documents_id_fk"
-            referencedTableName="patients"
-            referencedColumnNames="id"
-            onDelete="RESTRICT"
-            validate="true"
+      baseTableName="identification_documents"
+      baseColumnNames="id"
+      constraintName="identification_documents_id_fk"
+      referencedTableName="patients"
+      referencedColumnNames="id"
+      onDelete="RESTRICT"
+      validate="true"
     />
   </changeSet>
   <changeSet id="CAR-63" author="Andy Chang">
     <dropColumn
-            tableName="physicians"
-            columnName="first_name"
+      tableName="physicians"
+      columnName="first_name"
     />
     <rollback>
       <addColumn tableName="physicians">
         <column name="first_name" type="varchar(50)">
           <constraints nullable="false"/>
         </column>
-        </addColumn>
+      </addColumn>
     </rollback>
     <dropColumn
       tableName="physicians"
