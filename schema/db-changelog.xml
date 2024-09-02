@@ -364,19 +364,6 @@
       validate="true"
     />
   </changeSet>
-  <changeSet id="CAR-63" author="Andy Chang">
-    <dropColumn
-      tableName="physicians"
-      columnName="first_name"
-    />
-    <rollback>
-      <addColumn tableName="physicians">
-        <column name="first_name" type="varchar(50)">
-          <constraints nullable="false"/>
-        </column>
-      </addColumn>
-    </rollback>
-  </changeSet>
   <changeSet id="CAR-44" author="Maxine Wu">
     <addColumn tableName="patients">
       <column name="primary_phone" type="varchar(150)">
@@ -406,16 +393,10 @@
       <column name="identification_type" type="varchar(150)">
         <constraints nullable="false"/>
       </column>
-      <column name="identification_document_id" type="int">
-        <constraints nullable="false"/>
-      </column>
       <column name="treatment_concent" type="boolean" defaultValueComputed="false">
         <constraints nullable="false"/>
       </column>
       <column name="disclosure_concent" type="boolean" defaultValueComputed="false">
-        <constraints nullable="false"/>
-      </column>
-      <column name="privacy_concent" type="boolean" defaultValueComputed="false">
         <constraints nullable="false"/>
       </column>
       <column name="privacy_concent" type="boolean" defaultValueComputed="false">
@@ -476,7 +457,7 @@
     />
     <createTable tableName="medications">
       <column name="id" autoIncrement="true" type="SERIAL">
-        <constraints nullable="false" primaryKeyName="medications_pkey"/>
+        <constraints nullable="false" primaryKeyName="medications_pkey" primaryKey="true"/>
       </column>
       <column name="uuid" type="UUID" defaultValueComputed="gen_random_uuid()">
         <constraints nullable="false" unique="true"/>
@@ -516,7 +497,7 @@
     />
     <createTable tableName="identification_documents">
       <column name="id" type="SERIAL">
-        <constraints nullable="false" primaryKeyName="identification_documents_pkey"/>
+        <constraints nullable="false" primaryKeyName="identification_documents_pkey" primaryKey="true"/>
       </column>
       <column name="uuid" type="UUID" defaultValueComputed="gen_random_uuid()">
         <constraints nullable="false" unique="true"/>
@@ -533,12 +514,23 @@
             baseColumnNames="id"
             constraintName="identification_documents_id_fk"
             referencedTableName="patients"
-            referencedColumnNames="identification_document_id"
+            referencedColumnNames="id"
             onDelete="RESTRICT"
             validate="true"
     />
   </changeSet>
   <changeSet id="CAR-63" author="Andy Chang">
+    <dropColumn
+            tableName="physicians"
+            columnName="first_name"
+    />
+    <rollback>
+      <addColumn tableName="physicians">
+        <column name="first_name" type="varchar(50)">
+          <constraints nullable="false"/>
+        </column>
+        </addColumn>
+    </rollback>
     <dropColumn
       tableName="physicians"
       columnName="last_name"
