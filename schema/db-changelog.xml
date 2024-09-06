@@ -562,4 +562,12 @@
       </dropColumn>
     </rollback>
   </changeSet>
+  <changeSet id="CAR-71" author="Andy Chang">
+    <addColumn
+      tableName="users">
+      <column name="user_type" type="varchar(10)">
+        <constraints nullable="false"/>
+      </column>
+    </addColumn>
+  </changeSet>
 </databaseChangeLog>
